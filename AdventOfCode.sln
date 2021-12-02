@@ -7,19 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{F6C5D3B6-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC_2021_1", "AOC_2021_1\AOC_2021_1.csproj", "{93461725-6346-4FC4-A0CD-2E7758354BC1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inputs", "inputs", "{4659C038-A1CB-41EA-9FD0-E4C6EE8B28F5}"
-	ProjectSection(SolutionItems) = preProject
-		inputs\2021_1.txt = inputs\2021_1.txt
-		inputs\2021_1_2.txt = inputs\2021_1_2.txt
-		inputs\2021_2.txt = inputs\2021_2.txt
-		inputs\2021_2_2.txt = inputs\2021_2_2.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC_2021_2", "AOC_2021_2\AOC_2021_2.csproj", "{F1875204-BF59-41CB-98FA-E6EDE0C993DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC_2021_1_2", "AOC_2021_1_2\AOC_2021_1_2.csproj", "{84A08118-3AD8-4083-A2A1-1A24BF3182BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC_2021_2_2", "AOC_2021_2_2\AOC_2021_2_2.csproj", "{0896620B-617A-4318-81B7-C221F114DB65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC.Util", "AOC.Util\AOC.Util.csproj", "{01F575D0-1C7D-471F-9FDD-C3FA032B0EDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +37,10 @@ Global
 		{0896620B-617A-4318-81B7-C221F114DB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0896620B-617A-4318-81B7-C221F114DB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0896620B-617A-4318-81B7-C221F114DB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01F575D0-1C7D-471F-9FDD-C3FA032B0EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F575D0-1C7D-471F-9FDD-C3FA032B0EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F575D0-1C7D-471F-9FDD-C3FA032B0EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F575D0-1C7D-471F-9FDD-C3FA032B0EDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
