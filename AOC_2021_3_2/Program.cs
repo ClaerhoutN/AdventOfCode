@@ -15,19 +15,8 @@ namespace AOC_2021_3_2
 
             var inputLines = await InputHelper.GetInputLines<string>(inputUrl);
 
-            string oxygenGen = GetByBitwiseSum(inputLines, 0, x =>
-            {
-                if (x >= 0)
-                    return '1';
-                else return '0';
-            }, 12);
-
-            string co2Scrubber = GetByBitwiseSum(inputLines, 0, x =>
-            {
-                if (x >= 0)
-                    return '0';
-                else return '1';
-            }, 12);
+            string oxygenGen = GetByBitwiseSum(inputLines, 0, x => x >= 0 ? '1' : '0', 12);
+            string co2Scrubber = GetByBitwiseSum(inputLines, 0, x => x >= 0 ? '0' : '1', 12);
             
             Console.WriteLine(Convert.ToUInt64(oxygenGen, 2) * Convert.ToUInt64(co2Scrubber, 2));
             Console.ReadKey();
