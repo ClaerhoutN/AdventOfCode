@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AOC.Util
@@ -28,12 +31,51 @@ namespace AOC.Util
             string sessionId = _config["sessionId"];
             _httpClient.DefaultRequestHeaders.Add("cookie", $"session={sessionId}");
         }
-        public static async Task<IReadOnlyList<T>> GetInputLines<T>(string url, string tupleArgumentSeparator = " ")
+        private static async Task<string> GetOrCreateInputFileData(string url)
         {
-            var inputLines = (await _httpClient.GetStringAsync(url))
-                .Split("\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            string fileName = url.Substring(url.LastIndexOf('/') + 1);
+            string data;
+            try
+            {
+                data = File.ReadAllText(fileName);
+            }
+            catch
+            {
+                data = await _httpClient.GetStringAsync(url);
+                File.WriteAllText(fileName, data);
+            }
+            return data;
+        }
+        public static Task<string> GetInputText(string url) => GetOrCreateInputFileData(url);
+        public static async Task<IReadOnlyList<T>> GetInputLines<T>(string url, string argumentSeparatorRegex = " ", string lineSeparatorRegex = "\n")
+        {
+            string data = await GetOrCreateInputFileData(url);
+            var inputLines = Regex.Split(data, lineSeparatorRegex)
+                .Where(x => ! string.IsNullOrWhiteSpace(x))
+                .ToList();
 
-            if (typeof(T).IsGenericType)
+            MethodInfo GetParsingMethod(Type type)
+            {
+                return typeof(InputHelper)
+                    .GetMethod(nameof(ParseString), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                    .MakeGenericMethod(type);
+            } 
+            if(typeof(T).IsArray)
+            {
+                var elementType = typeof(T).GetElementType();
+                var parsingMethod = GetParsingMethod(elementType);
+                return inputLines.Select(x =>
+                {
+                    string[] splitted = Regex.Split(x, argumentSeparatorRegex);
+                    var array = Array.CreateInstance(elementType, splitted.Length);
+                    for (int i = 0; i < splitted.Length; ++i)
+                    {
+                        array.SetValue(parsingMethod.Invoke(null, new object[] { splitted[i] }), i);
+                    }
+                    return (T)(object)array;
+                }).ToList();
+            }
+            else if (typeof(T).IsGenericType)
             {
                 var genericTypeDefinition = typeof(T).GetGenericTypeDefinition();
                 if (genericTypeDefinition == typeof(ValueTuple<,>)
@@ -46,14 +88,11 @@ namespace AOC.Util
                 {
                     var parsingMethodsPerTypeArgument =
                         typeof(T).GenericTypeArguments
-                        .Select(typeArgument =>
-                            typeof(InputHelper)
-                            .GetMethod(nameof(ParseString), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
-                            .MakeGenericMethod(typeArgument))
+                        .Select(typeArgument => GetParsingMethod(typeArgument))
                         .ToList();
                     return inputLines.Select(x =>
                     {
-                        string[] splitted = x.Split(tupleArgumentSeparator);
+                        string[] splitted = Regex.Split(x, argumentSeparatorRegex);
                         if (splitted.Length < parsingMethodsPerTypeArgument.Count)
                             throw new NotImplementedException();
                         object[] tupleArguments = new object[parsingMethodsPerTypeArgument.Count()];
