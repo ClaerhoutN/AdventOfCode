@@ -13,12 +13,7 @@ namespace AOC_2021_2
             string inputUrl = "https://adventofcode.com/2021/day/2/input";
 
             long x = 0, y = 0;
-            foreach ((string direction, int amount) in (await InputHelper.GetInputLines<string>(inputUrl))
-                .Select(x =>
-                {
-                    string[] splittedCommand = x.Split(" ");
-                    return (splittedCommand[0], int.Parse(splittedCommand[1]));
-                }))
+            foreach ((string direction, int amount) in await InputHelper.GetInputLines<(string, int)>(inputUrl))
             {
                 switch(direction)
                 {

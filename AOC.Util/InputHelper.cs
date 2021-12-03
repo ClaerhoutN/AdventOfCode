@@ -28,18 +28,56 @@ namespace AOC.Util
             string sessionId = _config["sessionId"];
             _httpClient.DefaultRequestHeaders.Add("cookie", $"session={sessionId}");
         }
-        public static async Task<IReadOnlyList<T>> GetInputLines<T>(string uri)
+        public static async Task<IReadOnlyList<T>> GetInputLines<T>(string url, string tupleArgumentSeparator = " ")
         {
-            var inputLines = (await _httpClient.GetStringAsync(uri))
+            var inputLines = (await _httpClient.GetStringAsync(url))
                 .Split("\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (typeof(T).IsGenericType)
+            {
+                var genericTypeDefinition = typeof(T).GetGenericTypeDefinition();
+                if (genericTypeDefinition == typeof(ValueTuple<,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,,,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,,,,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,,,,,>)
+                    || genericTypeDefinition == typeof(ValueTuple<,,,,,,,>))
+                {
+                    var parsingMethodsPerTypeArgument =
+                        typeof(T).GenericTypeArguments
+                        .Select(typeArgument =>
+                            typeof(InputHelper)
+                            .GetMethod(nameof(ParseString), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                            .MakeGenericMethod(typeArgument))
+                        .ToList();
+                    return inputLines.Select(x =>
+                    {
+                        string[] splitted = x.Split(tupleArgumentSeparator);
+                        object[] tupleArguments = new object[parsingMethodsPerTypeArgument.Count()];
+                        for (int i = 0; i < parsingMethodsPerTypeArgument.Count; ++i)
+                        {
+                            tupleArguments[i] = parsingMethodsPerTypeArgument[i].Invoke(null, new object[] { splitted[i] });
+                        }
+                        return (T)Activator.CreateInstance(typeof(T), tupleArguments);
+                    }).ToList();
+                }
+            }
+            else
+                return inputLines.Select(x => ParseString<T>(x)).ToList();
+            throw new NotImplementedException();
+        }
+
+        private static T ParseString<T>(string s)
+        {
             switch (Type.GetTypeCode(typeof(T)))
             {
                 case TypeCode.Int64:
-                        return inputLines.Select(x => (T)(object)long.Parse(x)).ToList();
+                    return (T)(object)long.Parse(s);
                 case TypeCode.Int32:
-                    return inputLines.Select(x => (T)(object)int.Parse(x)).ToList();
+                    return (T)(object)int.Parse(s);
                 case TypeCode.String:
-                    return inputLines.Select(x => (T)(object)x).ToList();
+                    return (T)(object)s;
             }
             throw new NotImplementedException();
         }
