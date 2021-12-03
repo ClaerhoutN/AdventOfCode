@@ -54,6 +54,8 @@ namespace AOC.Util
                     return inputLines.Select(x =>
                     {
                         string[] splitted = x.Split(tupleArgumentSeparator);
+                        if (splitted.Length < parsingMethodsPerTypeArgument.Count)
+                            throw new NotImplementedException();
                         object[] tupleArguments = new object[parsingMethodsPerTypeArgument.Count()];
                         for (int i = 0; i < parsingMethodsPerTypeArgument.Count; ++i)
                         {
