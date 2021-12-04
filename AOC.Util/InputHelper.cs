@@ -66,7 +66,8 @@ namespace AOC.Util
                 var parsingMethod = GetParsingMethod(elementType);
                 return inputLines.Select(x =>
                 {
-                    string[] splitted = Regex.Split(x, argumentSeparatorRegex);
+                    string[] splitted = Regex.Split(x, argumentSeparatorRegex)
+                        .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                     var array = Array.CreateInstance(elementType, splitted.Length);
                     for (int i = 0; i < splitted.Length; ++i)
                     {

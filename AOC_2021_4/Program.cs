@@ -12,10 +12,10 @@ namespace AOC_2021_4
         {
             string inputUrl = "https://adventofcode.com/2021/day/4/input";
 
-            var inputLines = await InputHelper.GetInputLines<string[]>(inputUrl, 
+            var inputLines = await InputHelper.GetInputLines<int[]>(inputUrl, 
                 argumentSeparatorRegex: "[,\\s]+", lineSeparatorRegex: "\\n\\n");
 
-            var calledNumbers = inputLines[0].Select(x => int.Parse(x)).ToList();
+            var calledNumbers = inputLines[0];
             var boardLines = inputLines.Skip(1).ToList();
 
             int rows = 5, cols = 5;
@@ -26,15 +26,11 @@ namespace AOC_2021_4
             {
                 boards[i] = new int[rows, cols];
                 trackedBoardNumbers[i] = new bool[rows, cols];
-                line.Where(x => ! string.IsNullOrWhiteSpace(x))
-                    .ToList() //prevent rerunning iteration multiple times
-                    .ForEach((i2, v, _) =>
+                line.ForEach((i2, v, _) =>
                 {
-                    int nr = int.Parse(v);
-                    boards[i][i2 / 5, i2 % 5] = nr;
-                    sumsOfUnmarked[i] += nr;
+                    boards[i][i2 / 5, i2 % 5] = v;
+                    sumsOfUnmarked[i] += v;
                 });
-
             });
 
             int finalScore = -1;
@@ -42,41 +38,21 @@ namespace AOC_2021_4
             {
                 boards.ForEach((boardIndex, board, @break) =>
                 {
-                    for (int row = 0; row < rows; ++row)
+                    AOC.Util.Range.FromDimensions(rows, cols).ForEach((i, rc, @break2) =>
                     {
-                        for (int col = 0; col < cols; ++col)
+                        int row = rc.Item1, col = rc.Item2;
+                        if (board[row, col] == calledNumber)
                         {
-                            if (board[row, col] == calledNumber)
+                            trackedBoardNumbers[boardIndex][row, col] = true;
+                            sumsOfUnmarked[boardIndex] -= calledNumber;
+                            if (Enumerable.Range(0, cols).All(x => trackedBoardNumbers[boardIndex][row, x])
+                            || Enumerable.Range(0, rows).All(x => trackedBoardNumbers[boardIndex][x, col]))
                             {
-                                trackedBoardNumbers[boardIndex][row, col] = true;
-                                sumsOfUnmarked[boardIndex] -= calledNumber;
-                                for (int i = 0; i < cols; ++i)
-                                {
-                                    if (trackedBoardNumbers[boardIndex][row, i] == false)
-                                        break;
-                                    else if (i == cols - 1)
-                                    {
-                                        finalScore = calledNumber * sumsOfUnmarked[boardIndex];
-                                        @break();
-                                        goto end;
-                                    }
-                                }
-                                for (int i = 0; i < rows; ++i)
-                                {
-                                    if (trackedBoardNumbers[boardIndex][i, col] == false)
-                                        break;
-                                    else if (i == rows - 1)
-                                    {
-                                        finalScore = calledNumber * sumsOfUnmarked[boardIndex];
-                                        @break();
-                                        goto end;
-                                    }
-                                }
+                                finalScore = calledNumber * sumsOfUnmarked[boardIndex];
+                                @break(); @break2();
                             }
                         }
-                    }
-                    end:
-                    byte _;
+                    });
                 });
                 if (finalScore >= 0)
                     break;

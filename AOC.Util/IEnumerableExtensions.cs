@@ -40,4 +40,11 @@ namespace AOC.Util
             rest = arr.Length > 0 ? arr.AsSpan(1) : arr.AsSpan(0);
         }
     }
+    public static class Range
+    {
+        public static IEnumerable<(int, int)> FromDimensions(int a, int b)
+        {
+            return Enumerable.Range(0, a).SelectMany(row => Enumerable.Range(0, b).Select(col => (row, col)));
+        }
+    }
 }
