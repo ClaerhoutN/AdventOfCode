@@ -8,11 +8,15 @@ namespace AOC.Util
 {
     public static class IEnumerableExtensions
     {
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<int, T> action)
+        public static void ForEach<T>(this IEnumerable<T> collection, Action<int, T, Action> action)
         {
             for(int i = 0; i < collection.Count(); ++i)
             {
-                action(i, collection.ElementAt(i));
+                bool @break = false;
+                Action fcBreak = () => { @break = true; };
+                action(i, collection.ElementAt(i), fcBreak);
+                if (@break)
+                    break;
             }
         }
         public static U Aggregate<T, U>(this IEnumerable<T> collection, Func<int, U, T, U> func, U seed = default)
