@@ -8,9 +8,9 @@ namespace AOC.Util
 {
     public static class CastingExtensions
     {
-        public static bool ToBool(this int i)
+        public static bool ToBool(this int i, int zeroFlag = 0)
         {
-            return i == 0 ? false : true;
+            return i == zeroFlag ? false : true;
         }
 
         public static T[,] ToMultiDim<T>(this T[] array, int rows)

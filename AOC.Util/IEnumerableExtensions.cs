@@ -56,6 +56,19 @@ namespace AOC.Util
             }
             return sum;
         }
+        public static int SumWhere(this int[,] array, Predicate<int> condition)
+        {
+            int sum = 0;
+            for (int i = 0; i < array.GetLength(0); ++i)
+            {
+                for (int j = 0; j < array.GetLength(1); ++j)
+                {
+                    if(condition(array[i, j]))
+                        sum += array[i, j];
+                }
+            }
+            return sum;
+        }
     }
     public static class Range
     {

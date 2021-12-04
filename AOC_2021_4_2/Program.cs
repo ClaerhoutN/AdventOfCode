@@ -33,12 +33,12 @@ namespace AOC_2021_4_2
                         int row = rc.Item1, col = rc.Item2;
                         if (board[row, col] == calledNumber)
                         {
-                            boards[boardIndex][row, col] = 0;
-                            if (Enumerable.Range(0, cols).All(x => !boards[boardIndex][row, x].ToBool())
-                            || Enumerable.Range(0, rows).All(x => !boards[boardIndex][x, col].ToBool()))
+                            boards[boardIndex][row, col] = -1;
+                            if (Enumerable.Range(0, cols).All(x => !boards[boardIndex][row, x].ToBool(-1))
+                            || Enumerable.Range(0, rows).All(x => !boards[boardIndex][x, col].ToBool(-1)))
                             {
                                 boardsWon[boardIndex] = true;
-                                finalScore = calledNumber * boards[boardIndex].Sum();
+                                finalScore = calledNumber * boards[boardIndex].SumWhere(x => x != -1);
                                 @break2();
                             }
                         }
