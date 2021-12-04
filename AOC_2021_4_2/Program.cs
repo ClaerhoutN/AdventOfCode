@@ -18,20 +18,8 @@ namespace AOC_2021_4_2
             var boardLines = inputLines.Skip(1).ToList();
 
             int rows = 5, cols = 5;
-            int[][,] boards = new int[boardLines.Count][,]; //stackalloc?
-            bool[][,] trackedBoardNumbers = new bool[boardLines.Count][,]; //stackalloc?
-            int[] sumsOfUnmarked = new int[boardLines.Count];
+            int[][,] boards = boardLines.Select(line => line.ToMultiDimArray(rows)).ToArray();
             bool[] boardsWon = new bool[boardLines.Count];
-            boardLines.ForEach((i, line, _) =>
-            {
-                boards[i] = new int[rows, cols];
-                trackedBoardNumbers[i] = new bool[rows, cols];
-                line.ForEach((i2, v, _) =>
-                {
-                    boards[i][i2 / 5, i2 % 5] = v;
-                    sumsOfUnmarked[i] += v;
-                });
-            });
 
             int finalScore = -1;
             foreach (int calledNumber in calledNumbers)
@@ -45,13 +33,12 @@ namespace AOC_2021_4_2
                         int row = rc.Item1, col = rc.Item2;
                         if (board[row, col] == calledNumber)
                         {
-                            trackedBoardNumbers[boardIndex][row, col] = true;
-                            sumsOfUnmarked[boardIndex] -= calledNumber;
-                            if (Enumerable.Range(0, cols).All(x => trackedBoardNumbers[boardIndex][row, x])
-                            || Enumerable.Range(0, rows).All(x => trackedBoardNumbers[boardIndex][x, col]))
+                            boards[boardIndex][row, col] = 0;
+                            if (Enumerable.Range(0, cols).All(x => !boards[boardIndex][row, x].ToBool())
+                            || Enumerable.Range(0, rows).All(x => !boards[boardIndex][x, col].ToBool()))
                             {
                                 boardsWon[boardIndex] = true;
-                                finalScore = calledNumber * sumsOfUnmarked[boardIndex];
+                                finalScore = calledNumber * boards[boardIndex].Sum();
                                 @break2();
                             }
                         }
