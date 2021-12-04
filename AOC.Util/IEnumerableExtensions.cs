@@ -10,21 +10,25 @@ namespace AOC.Util
     {
         public static void ForEach<T>(this IEnumerable<T> collection, Action<int, T, Action> action)
         {
-            for(int i = 0; i < collection.Count(); ++i)
+            int i = 0;
+            foreach(var el in collection)
             {
                 bool @break = false;
                 Action fcBreak = () => { @break = true; };
-                action(i, collection.ElementAt(i), fcBreak);
+                action(i, el, fcBreak);
                 if (@break)
                     break;
+                ++i;
             }
         }
         public static U Aggregate<T, U>(this IEnumerable<T> collection, Func<int, U, T, U> func, U seed = default)
         {
             U result = seed;
-            for (int i = 0; i < collection.Count(); ++i)
+            int i = 0;
+            foreach (var el in collection)
             {
-                result = func(i, result, collection.ElementAt(i));
+                result = func(i, result, el);
+                ++i;
             }
             return result;
         }

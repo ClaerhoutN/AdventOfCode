@@ -19,7 +19,7 @@ namespace AOC_2021_4
             var boardLines = inputLines.Skip(1).ToList();
 
             int rows = 5, cols = 5;
-            int[][,] boards = boardLines.Select(line => line.ToMultiDimArray(rows)).ToArray();
+            int[][,] boards = boardLines.Select(line => line.ToMultiDim(rows)).ToArray();
 
             int finalScore = -1;
             foreach (int calledNumber in calledNumbers)

@@ -18,7 +18,7 @@ namespace AOC_2021_4_2
             var boardLines = inputLines.Skip(1).ToList();
 
             int rows = 5, cols = 5;
-            int[][,] boards = boardLines.Select(line => line.ToMultiDimArray(rows)).ToArray();
+            int[][,] boards = boardLines.Select(line => line.ToMultiDim(rows)).ToArray();
             bool[] boardsWon = new bool[boardLines.Count];
 
             int finalScore = -1;

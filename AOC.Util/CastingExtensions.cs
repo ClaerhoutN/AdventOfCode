@@ -13,7 +13,7 @@ namespace AOC.Util
             return i == 0 ? false : true;
         }
 
-        public static T[,] ToMultiDimArray<T>(this T[] array, int rows)
+        public static T[,] ToMultiDim<T>(this T[] array, int rows)
         {
             T[,] multiDimArray = new T[rows, array.Length / rows];
             for(int i = 0; i < array.Length; ++i)
