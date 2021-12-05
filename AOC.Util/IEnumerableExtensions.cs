@@ -69,6 +69,77 @@ namespace AOC.Util
             }
             return sum;
         }
+
+        public static int IndexWhere<T>(this IEnumerable<T> elements, Predicate<T> condition)
+        {
+            int i = 0;
+            foreach(T el in elements)
+            {
+                if (condition(el))
+                    return i;
+                ++i;
+            }
+            return -1;
+        }
+
+        public static long SumWhile(this IEnumerable<long> elements, out int count, Predicate<long> condition = null, Predicate<long> sumCondition = null)
+        {
+            long sum = 0;
+            count = 0;
+            foreach (long el in elements)
+            {
+                if ((condition == null || condition(el))
+                    && (sumCondition == null || sumCondition(sum)))
+                    sum += el;
+                else
+                    break;
+                ++count;
+            }
+            return sum;
+        }
+
+        public static IEnumerable<T> ExceptIndex<T>(this IEnumerable<T> elements, int index)
+        {
+            int i = 0;
+            foreach(T el in elements)
+            {
+                if (i++ != index)
+                    yield return el;
+            }
+        }
+
+        public static IEnumerable<IEnumerable<T>> SlidingWindows<T>(this IEnumerable<T> elements, int range, int inc = 1)
+        {
+            while(elements.Any())
+            {
+                yield return elements.Take(range);
+                elements = elements.Skip(inc);
+            }    
+        }
+
+        public static IEnumerable<T> DistdinctBy<T, U>(this IEnumerable<T> elements, Func<T, U> selector)
+        {
+            Dictionary<U, T> dict = new Dictionary<U, T>();
+            foreach(var el in elements)
+            {
+                U key = selector(el);
+                dict.TryAdd(key, el);
+            }
+            return dict.Values;
+        }
+
+        public static IEnumerable<long[]> Permutations(this IEnumerable<long> elements, int amount)
+        {
+            if (amount > elements.Count()) throw new NotImplementedException();
+            if (amount == 1)
+                return elements.Select(x => new[] { x });
+            List<long[]> permutations = new List<long[]>();
+            elements.ToList().ForEach((i, e, _) =>
+            {
+                permutations.AddRange(elements.ExceptIndex(i).Permutations(amount - 1).Select(x => x.Concat(new[] { e }).ToArray()));
+            });
+            return permutations;
+        }
     }
     public static class Range
     {
