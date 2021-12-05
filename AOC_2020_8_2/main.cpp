@@ -18,7 +18,6 @@ int main() {
 	for (auto& command : commands)
 	{
 		if (get<0>(command) == "acc") continue;
-
 		string oldSwitch = get<0>(command);
 		get<0>(command) = (oldSwitch == "nop" ? "jmp" : "nop");
 		bool found = false;
@@ -30,27 +29,24 @@ int main() {
 			string name = get<0>(*instructionPtr);
 			int amount = get<1>(*instructionPtr);
 			get<2>(*instructionPtr) = true;
-
 			if (name == "acc")
 				acc += amount;
 			if (name == "jmp")
 				instructionPtr += amount;
 			else
 				++instructionPtr;
-
 			if (instructionPtr == &commands.back())
 				found = true;
-			else if (instructionPtr < &commands.front() || instructionPtr > &commands.back())
-				break;
-		} while (!found && !get<2>(*instructionPtr));
+		} while (!found 
+			&& instructionPtr >= &commands.front() 
+			&& instructionPtr <= &commands.back() 
+			&& !get<2>(*instructionPtr));
 		
 		get<0>(command) = oldSwitch;
-
 		for (auto& c : commands)
 		{
 			get<2>(c) = false;
 		}
-
 		if (found)
 			break;
 	}
