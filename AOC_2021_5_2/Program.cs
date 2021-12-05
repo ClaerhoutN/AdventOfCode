@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AOC_2021_5
+namespace AOC_2021_5_2
 {
     class Program
     {
@@ -23,9 +23,7 @@ namespace AOC_2021_5
                     y2 = int.Parse(p2[1]);
 
                 return new int[,] { { x1, y1 }, { x2, y2 } };
-            })
-                .Where(x => x[0, 0] == x[1, 0] || x[0, 1] == x[1, 1])
-                .ToArray();
+            }).ToArray();
             int[,] overlappedPositions = new int[
                 ventPositions.Max(x => Math.Max(x[0, 0], x[1, 0])) + 1,
                 ventPositions.Max(x => Math.Max(x[0, 1], x[1, 1])) + 1];
@@ -69,24 +67,33 @@ namespace AOC_2021_5
                     }
 
                 }
+                else if(p[0, 0] <= p[1, 0]) //diagonal, left to right
+                {
+                    if(p[0, 1] >= p[1, 1]) //down
+                    {
+                        for (int i = 0; i <= (p[0, 1] - p[1, 1]); ++i)
+                            ++overlappedPositions[p[0, 0] + i, p[0, 1] - i];
+                    }
+                    else //up
+                    {
+                        for (int i = 0; i <= (p[1, 1] - p[0, 1]); ++i)
+                            ++overlappedPositions[p[0, 0] + i, p[0, 1] + i];
+                    }
+                }
+                else //diagonal, right to left
+                {
+                    if (p[0, 1] >= p[1, 1]) //down
+                    {
+                        for (int i = 0; i <= (p[0, 1] - p[1, 1]); ++i)
+                            ++overlappedPositions[p[0, 0] - i, p[0, 1] - i];
+                    }
+                    else //up
+                    {
+                        for (int i = 0; i <= (p[1, 1] - p[0, 1]); ++i)
+                            ++overlappedPositions[p[0, 0] - i, p[0, 1] + i];
+                    }
+                }
             });
         }
     }
 }
-
-/*CROSSING*/
-////p1 crossing p2 vertically
-//if (
-//    ((p1[0,1] <= p2[0,1] && p2[0,1] <= p1[1,1]) //compare y
-//||   (p1[1,1] <= p2[0,1] && p2[0,1] <= p1[0,1]))
-//&&  ((p2[0,0] <= p1[0,0] && p1[0,0] <= p2[1,0]) //compare x
-//||   (p2[1,0] <= p1[0,0] && p1[0,0] <= p2[0,0])))
-//    ++crossedPositions[p1[0,0], p2[0,1]];
-
-////p1 crossing p2 horizontally
-//else if (
-//    ((p1[0,0] <= p2[0,0] && p2[0,0] <= p1[1,0]) //compare x
-//||   (p1[1,0] <= p2[0,0] && p2[0,0] <= p1[0, 0]))
-//&&  ((p2[0,1] <= p1[0,1] && p1[0,1] <= p2[1,1]) //compare y
-//||   (p2[1,1] <= p1[0,1] && p1[0,1] <= p2[0,1])))
-//    ++crossedPositions[p2[0,0], p1[0,1]];
