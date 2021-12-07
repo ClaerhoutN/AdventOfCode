@@ -1,41 +1,63 @@
 #include "input.h"
 #include <iostream>
 #include <stringUtilities.h>
-#include <tuple>
+#include <Windows.h>
 using namespace std;
 
 size_t gridWidth;
 size_t gridHeight;
 
+bool _t(char c, int& count) {
+	if(c == '#')
+		++count;
+	if (c == '#' || c == 'L')
+	{
+		return true;
+	}
+	return false;
+}
+
+int countOccupiedAdjacentInSight(int row, int col,
+	const char* const* const referenceGrid, int range = -1)
+{
+	int count = 0;
+	bool tl = false, bl = false, l = false, tr = false, br = false, r = false, t = false, b = false;
+	int i = 1;
+	while (i <= (range != -1 ? range : max((int)gridWidth, (int)gridHeight)) && (!tl || !bl || !l || !tr || !br || !r || !t || !b))
+	{
+		if (col >= i)
+		{
+			if (!tl && row >= i) //tl
+				tl = _t(referenceGrid[row - i][col - i], count);
+			if (!bl && row < (int)gridHeight - i) //bl
+				bl = _t(referenceGrid[row + i][col - i], count);
+			if (!l) //l
+				l = _t(referenceGrid[row][col - i], count);
+		}
+		if (col < (int)gridWidth - i)
+		{
+			if (!tr && row >= i) //tr
+				tr = _t(referenceGrid[row - i][col + i], count);
+			if (!br && row < (int)gridHeight - i) //br
+				br = _t(referenceGrid[row + i][col + i], count);
+			if (!r) //r
+				r = _t(referenceGrid[row][col + i], count);
+		}
+		if (!t && row >= i) //t
+			t = _t(referenceGrid[row - i][col], count);
+		if (!b && row < (int)gridHeight - i) //b
+			b = _t(referenceGrid[row + i][col], count);
+
+		++i;
+	}
+	return count;
+
+}
 
 int countOccupiedAdjacent(int row, int col,
 	const char* const* const referenceGrid)
 {
-	int count = 0;
-	if (col != 0)
-	{
-		if (row != 0 && referenceGrid[row - 1][col - 1] == '#')
-			++count;
-		if (row != gridHeight - 1 && referenceGrid[row + 1][col - 1] == '#')
-			++count;
-		if (referenceGrid[row][col - 1] == '#')
-			++count;
-	}
-	if (col != gridWidth - 1)
-	{
-		if (row != 0 && referenceGrid[row - 1][col + 1] == '#')
-			++count;
-		if (row != gridHeight - 1 && referenceGrid[row + 1][col + 1] == '#')
-			++count;
-		if (referenceGrid[row][col + 1] == '#')
-			++count;
-	}
-	if (row != 0 && referenceGrid[row - 1][col] == '#')
-		++count;
-	if (row != gridHeight - 1 && referenceGrid[row + 1][col] == '#')
-		++count;
-	return count;
-
+	return countOccupiedAdjacentInSight(row, col, referenceGrid, -1);
 }
 bool shouldOccupy(
 	int row, int col, 
@@ -45,7 +67,7 @@ bool shouldOccupy(
 bool shouldMove(
 	int row, int col, 
 	const char* const* const referenceGrid) {
-	return countOccupiedAdjacent(row, col, referenceGrid) >= 4;
+	return countOccupiedAdjacent(row, col, referenceGrid) >= 5;
 }
 void deleteGrid(const char * const * const grid)
 {
@@ -66,10 +88,24 @@ char * const * const copyGrid(const char * const * const grid)
 	return newGrid;
 }
 
+void printGrid(const char* const* const grid, int callCount, int changeCount) {
+	for (int row = 0; row < gridHeight; ++row)
+	{
+		for (int col = 0; col < gridWidth; ++col)
+		{
+			cout << grid[row][col];
+		}
+		cout << endl;
+	}
+	cout << "---rendered " << callCount << "nd/th call to executeRound with " << changeCount << " changes---";
+	cout << endl << endl;
+}
+
 bool executeRound(char * const * const grid)
 {
 	bool changed = false;
 	const char * const * const referenceGrid = copyGrid(grid);
+	int changeCount = 0;
 	for (int row = 0; row < gridHeight; ++row)
 	{
 		for (int col = 0; col < gridWidth; ++col)
@@ -78,15 +114,22 @@ bool executeRound(char * const * const grid)
 			{
 				grid[row][col] = 'L';
 				changed = true;
+				++changeCount;
 			}
 			else if (grid[row][col] == 'L' && shouldOccupy(row, col, referenceGrid))
 			{
 				grid[row][col] = '#';
 				changed = true;
+				++changeCount;
 			}
 		}
 	}
 	deleteGrid(referenceGrid);
+
+	static unsigned long long callCnt = 1;
+	printGrid(grid, callCnt, changeCount);
+	++callCnt;
+
 	return changed;
 }
 
