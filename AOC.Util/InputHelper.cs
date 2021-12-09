@@ -12,7 +12,7 @@ namespace AOC.Util
 {
     public static class InputHelper
     {
-        private static HttpClient _httpClient = new HttpClient();
+        private static readonly HttpClient _httpClient = new();
         private static IConfiguration _config;
         static InputHelper()
         {
@@ -33,7 +33,7 @@ namespace AOC.Util
         }
         private static async Task<string> GetOrCreateInputFileData(string url)
         {
-            string fileName = url.Substring(url.LastIndexOf('/') + 1);
+            string fileName = url[(url.LastIndexOf('/') + 1)..];
             string data;
             try
             {
@@ -54,7 +54,9 @@ namespace AOC.Util
                 .Where(x => ! string.IsNullOrWhiteSpace(x))
                 .ToList();
 
+#pragma warning disable IDE0062 // Make local function 'static'
             MethodInfo GetParsingMethod(Type type)
+#pragma warning restore IDE0062 // Make local function 'static'
             {
                 return typeof(InputHelper)
                     .GetMethod(nameof(ParseString), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
@@ -96,7 +98,7 @@ namespace AOC.Util
                         string[] splitted = Regex.Split(x, argumentSeparatorRegex);
                         if (splitted.Length < parsingMethodsPerTypeArgument.Count)
                             throw new NotImplementedException();
-                        object[] tupleArguments = new object[parsingMethodsPerTypeArgument.Count()];
+                        object[] tupleArguments = new object[parsingMethodsPerTypeArgument.Count];
                         for (int i = 0; i < parsingMethodsPerTypeArgument.Count; ++i)
                         {
                             tupleArguments[i] = parsingMethodsPerTypeArgument[i].Invoke(null, new object[] { splitted[i] });
@@ -112,7 +114,9 @@ namespace AOC.Util
 
         private static T ParseString<T>(string s)
         {
+#pragma warning disable IDE0066 // Convert switch statement to expression
             switch (Type.GetTypeCode(typeof(T)))
+#pragma warning restore IDE0066 // Convert switch statement to expression
             {
                 case TypeCode.Int64:
                     return (T)(object)long.Parse(s);

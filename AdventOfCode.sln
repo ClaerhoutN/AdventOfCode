@@ -87,6 +87,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AOC_2021_9", "AOC_2021_9", 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "AOC_2020_13", "AOC_2020_13\AOC_2020_13.fsproj", "{F770A5E6-AFC1-4745-9C3F-C0E355AC0C0B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AOC.Util.CppInterop", "AOC.Util.CppInterop\AOC.Util.CppInterop.vcxproj", "{6D619435-DFE2-4B29-85FB-E368E5244D45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -501,6 +503,16 @@ Global
 		{F770A5E6-AFC1-4745-9C3F-C0E355AC0C0B}.Release|x64.Build.0 = Release|Any CPU
 		{F770A5E6-AFC1-4745-9C3F-C0E355AC0C0B}.Release|x86.ActiveCfg = Release|Any CPU
 		{F770A5E6-AFC1-4745-9C3F-C0E355AC0C0B}.Release|x86.Build.0 = Release|Any CPU
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Debug|x64.ActiveCfg = Debug|x64
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Debug|x64.Build.0 = Debug|x64
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Debug|x86.Build.0 = Debug|Win32
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Release|x64.ActiveCfg = Release|x64
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Release|x64.Build.0 = Release|x64
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Release|x86.ActiveCfg = Release|Win32
+		{6D619435-DFE2-4B29-85FB-E368E5244D45}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
