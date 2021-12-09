@@ -6,14 +6,14 @@
 using namespace std;
 
 //recursion for no good reason :)
-void addJoltageDiffInChain(vector<int>& const joltages, int fromIndex, vector<int>& const joltageDifferences)
+void addJoltageDiffInChain(vector<int>& joltages, int fromIndex, vector<int>& joltageDifferences)
 {
-	if (fromIndex +1 >= joltages.size()) return;
+	if (fromIndex +1 >= static_cast<int>(joltages.size())) return;
 	joltageDifferences[fromIndex] = joltages[fromIndex + 1] - joltages[fromIndex];
 	addJoltageDiffInChain(joltages, fromIndex + 1, joltageDifferences);
 }
 
-unsigned long long countAdapterChains(vector<int>& const joltages, int fromIndex, int lastJoltage)
+unsigned long long countAdapterChains(vector<int>& joltages, int fromIndex, int lastJoltage)
 {
 	static unordered_map<int, unsigned long long> cacheByLastJoltage;
 	if (fromIndex == joltages.size() - 1)

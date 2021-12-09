@@ -21,6 +21,11 @@
   <ItemGroup>
     <ClInclude Include="stringUtilities.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AOC.Util\AOC.Util.csproj">
+      <Project>{01f575d0-1c7d-471f-9fdd-c3fa032b0ede}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

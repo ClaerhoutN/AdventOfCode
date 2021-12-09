@@ -4,8 +4,8 @@
 #include <Windows.h>
 using namespace std;
 
-size_t gridWidth;
-size_t gridHeight;
+int gridWidth;
+int gridHeight;
 
 bool _t(char c, int& count) {
 	if(c == '#')
@@ -23,29 +23,29 @@ int countOccupiedAdjacentInSight(int row, int col,
 	int count = 0;
 	bool tl = false, bl = false, l = false, tr = false, br = false, r = false, t = false, b = false;
 	int i = 1;
-	while (i <= (range != -1 ? range : max((int)gridWidth, (int)gridHeight)) && (!tl || !bl || !l || !tr || !br || !r || !t || !b))
+	while (i <= (range != -1 ? range : max(gridWidth, gridHeight)) && (!tl || !bl || !l || !tr || !br || !r || !t || !b))
 	{
 		if (col >= i)
 		{
 			if (!tl && row >= i) //tl
 				tl = _t(referenceGrid[row - i][col - i], count);
-			if (!bl && row < (int)gridHeight - i) //bl
+			if (!bl && row < gridHeight - i) //bl
 				bl = _t(referenceGrid[row + i][col - i], count);
 			if (!l) //l
 				l = _t(referenceGrid[row][col - i], count);
 		}
-		if (col < (int)gridWidth - i)
+		if (col < gridWidth - i)
 		{
 			if (!tr && row >= i) //tr
 				tr = _t(referenceGrid[row - i][col + i], count);
-			if (!br && row < (int)gridHeight - i) //br
+			if (!br && row < gridHeight - i) //br
 				br = _t(referenceGrid[row + i][col + i], count);
 			if (!r) //r
 				r = _t(referenceGrid[row][col + i], count);
 		}
 		if (!t && row >= i) //t
 			t = _t(referenceGrid[row - i][col], count);
-		if (!b && row < (int)gridHeight - i) //b
+		if (!b && row < gridHeight - i) //b
 			b = _t(referenceGrid[row + i][col], count);
 
 		++i;
@@ -135,8 +135,8 @@ bool executeRound(char * const * const grid)
 
 int main() {
 	auto lines = split(input, '\n');
-	gridWidth = lines[0].length();
-	gridHeight = lines.size();
+	gridWidth = static_cast<int>(lines[0].length());
+	gridHeight = static_cast<int>(lines.size());
 	char** const grid = new char*[gridHeight];
 	for (int i = 0; i < gridHeight; ++i)
 	{
