@@ -1,6 +1,6 @@
-#include "input.h"
+#include "input.hpp"
 #include <iostream>
-#include <stringUtilities.h>
+#include <stringUtilities.hpp>
 #include <tuple>
 using namespace std;
 

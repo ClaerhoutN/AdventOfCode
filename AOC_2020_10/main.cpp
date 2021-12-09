@@ -1,8 +1,8 @@
-#include "input.h"
+#include "input.hpp"
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
-#include <stringUtilities.h>
+#include <stringUtilities.hpp>
 using namespace std;
 
 //recursion for no good reason :)
