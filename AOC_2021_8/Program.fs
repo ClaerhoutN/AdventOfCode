@@ -46,16 +46,16 @@ let main argv =
                     |> Async.AwaitTask |> Async.RunSynchronously
                     |> List.ofSeq
     let count1478 = inputData 
-                    |> List.map (fun s -> s.[(s.IndexOf('|')+2)..].Split(' ') |> List.ofArray |> List.map (fun s2 -> s2.Length))
-                    |> List.collect (fun sl -> sl)
-                    |> List.filter (fun sl -> match sl with 
+                    |> Seq.map (fun s -> s.[(s.IndexOf('|')+2)..].Split(' ') |> Array.map (fun s2 -> s2.Length))
+                    |> Seq.collect (fun sl -> sl)
+                    |> Seq.filter (fun sl -> match sl with 
                                               |2|3|4|7 -> true
                                               |_ -> false)
-                    |> List.length
+                    |> Seq.length
     printfn "%i" count1478
-    let decodedNumbers = inputData |> List.map (fun line -> 
+    let decodedNumbers = inputData |> Seq.map (fun line -> 
                                         let splittedLine = line.Split(" | ")
                                         decodeNumber (splittedLine.[0].Split(' ') |> List.ofArray) (splittedLine.[1].Split(' ') |> List.ofArray)
                                         |> System.String |> int)
-    printfn "%i" (List.sum decodedNumbers)
+    printfn "%i" (Seq.sum decodedNumbers)
     0

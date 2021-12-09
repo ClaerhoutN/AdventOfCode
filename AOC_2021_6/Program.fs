@@ -23,9 +23,9 @@ let main argv =
                 |> List.ofSeq
     let countedFishes = List.countBy (fun f -> f) fishes
     let fishStateCounts = [for i in 0..8 -> countedFishes
-                                            |> List.tryFind (fun (k, v) -> k = i)] 
-                                            |> List.map (fun kv -> match kv with |Some(k, v) -> (uint64)v |None -> 0UL)
-                                            |> Array.ofList
+                                            |> Seq.tryFind (fun (k, v) -> k = i)] 
+                                            |> Seq.map (fun kv -> match kv with |Some(k, v) -> (uint64)v |None -> 0UL)
+                                            |> Array.ofSeq
     let agedFishes = Array.zeroCreate<uint64> 9 |> ageFishes 256 fishStateCounts
     printfn "%i" (Array.sum agedFishes)
     0
