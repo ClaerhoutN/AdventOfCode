@@ -8,11 +8,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="InputHelper.hpp" />
-    <ClInclude Include="stringUtilities.hpp" />
+    <ClInclude Include="inputHelper.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
   </ItemGroup>
   <ItemGroup>

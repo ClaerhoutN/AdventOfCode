@@ -119,12 +119,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="InputHelper.hpp" />
+    <ClInclude Include="inputHelper.hpp" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="stringUtilities.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
