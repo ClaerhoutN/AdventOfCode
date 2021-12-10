@@ -1,8 +1,8 @@
-#include "input.hpp"
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
 #include <stringUtilities.hpp>
+#include <fileUtilities.h>
 using namespace std;
 
 //recursion for no good reason :)
@@ -41,7 +41,7 @@ unsigned long long countAdapterChains(vector<int>& joltages, int fromIndex, int 
 int main() {
 
 	vector<int> joltages { 0 };
-	for (string& joltage : split(input, '\n'))
+	for (string& joltage : split(readFile("../inputFiles/2020_10.txt"), '\n'))
 	{
 		joltages.push_back(stoi(joltage));
 	}

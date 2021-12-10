@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fileUtilities.h" />
     <ClInclude Include="networkUtilities.hpp" />
     <ClInclude Include="stringUtilities.hpp" />
   </ItemGroup>

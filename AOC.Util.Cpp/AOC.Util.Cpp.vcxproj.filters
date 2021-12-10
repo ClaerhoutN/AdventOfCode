@@ -3,5 +3,6 @@
   <ItemGroup>
     <ClInclude Include="networkUtilities.hpp" />
     <ClInclude Include="stringUtilities.hpp" />
+    <ClInclude Include="fileUtilities.h" />
   </ItemGroup>
 </Project>

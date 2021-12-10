@@ -1,13 +1,13 @@
-#include "input.hpp"
 #include <iostream>
 #include <stringUtilities.hpp>
+#include <fileUtilities.h>
 #include <tuple>
 using namespace std;
 
 int main() {
 
 	vector<tuple<string, int, bool>> commands;
-	for (string& instruction : split(input, '\n'))
+	for (string& instruction : split(readFile("../inputFiles/2020_8.txt"), '\n'))
 	{
 		string name = instruction.substr(0, 3);
 		int amount = stoi(instruction.substr(4));

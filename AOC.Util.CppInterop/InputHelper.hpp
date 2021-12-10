@@ -8,7 +8,7 @@ using namespace System::Threading::Tasks;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
-std::vector<std::string> GetInputLines(const char* url, const char* const lineSeparatorRegex)
+std::vector<std::string> GetInputLines(const char* const url, const char* const lineSeparatorRegex)
 {
 	String^ cliUrl = gcnew String(url);
 	String^ cliLineSeparatorRegex = gcnew String(lineSeparatorRegex);

@@ -1,6 +1,6 @@
-#include "input.hpp"
 #include <iostream>
 #include <stringUtilities.hpp>
+#include <fileUtilities.h>
 #include <Windows.h>
 using namespace std;
 
@@ -134,7 +134,7 @@ bool executeRound(char * const * const grid)
 }
 
 int main() {
-	auto lines = split(input, '\n');
+	auto lines = split(readFile("../inputFiles/2020_11.txt"), '\n');
 	gridWidth = static_cast<int>(lines[0].length());
 	gridHeight = static_cast<int>(lines.size());
 	char** const grid = new char*[gridHeight];

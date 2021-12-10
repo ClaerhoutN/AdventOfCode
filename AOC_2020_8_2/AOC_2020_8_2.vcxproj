@@ -19,9 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="input.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
