@@ -5,19 +5,19 @@ let isLowerAlpha (s:string) = s.ToCharArray() |> Seq.forall (fun c -> c >= 'a' &
 
 type cave = {Name: string; connectedCaves: string list}
 
-let isSigleSmallCaveVisitingMoreThanTwice ``from`` pathsVisited caves =
+let isSingleSmallCaveVisitingMoreThanTwice ``from`` pathsVisited caves =
     if ``from``.Name |> isLowerAlpha 
      then 
      match (pathsVisited |> List.filter (fun (c1, c2) -> c1 = ``from``) |> List.length) with
-     |0 -> false
-     |1 -> 
-        let cavesVisitedMoreThanTwice = caves 
-                                        |> List.filter (fun c -> 
-                                            c.Name |> isLowerAlpha
-                                            && (pathsVisited 
-                                                |> List.filter (fun (c1, c2) -> c1 = c) 
-                                                |> List.length >= 2))
-        cavesVisitedMoreThanTwice |> List.length > 0
+     |0 -> false 
+     |1 -> let cavesVisitedMoreThanTwice = 
+                caves 
+                |> List.filter (fun c -> 
+                    c.Name |> isLowerAlpha
+                    && (pathsVisited 
+                        |> List.filter (fun (c1, c2) -> c1 = c)
+                        |> List.length >= 2))
+           cavesVisitedMoreThanTwice |> List.length > 0
      |_ -> true
     else false
 
@@ -27,7 +27,7 @@ let rec countConnectionsPart2 caves ``from`` ``to`` pathsVisited =
         let repeatingSameCaveToCave = pathsVisited |> List.exists (fun (c1, c2) -> (c1, c2) = (``from``,toCave))
         if toCave.Name="start"
          || (repeatingSameCaveToCave && not (toCave.Name |> isLowerAlpha) && not (``from``.Name |> isLowerAlpha))
-         || caves |> isSigleSmallCaveVisitingMoreThanTwice ``from`` pathsVisited
+         || caves |> isSingleSmallCaveVisitingMoreThanTwice ``from`` pathsVisited
          then 0
         elif toCave = ``to`` then 1
         else (countConnectionsPart2 caves toCave ``to``) ((``from``,toCave)::pathsVisited)
@@ -44,7 +44,7 @@ let main argv =
     let connections = (input |> List.map (fun s -> s.Split('-') |> toTuple2))
                     |> List.append
                         (input |> List.map (fun s -> s.Split('-') |> Array.rev |> toTuple2))
-    let caves = connections |> List.groupBy (fun (cave1, cave2) -> cave1)
+    let caves = connections |> List.groupBy fst
                             |> List.map (fun (start, ccaves) -> { cave.Name=start; connectedCaves=ccaves |> List.map snd})
     let firstCave = caves |> List.find (fun cave -> cave.Name="start")
     let endCave = caves |> List.find (fun cave -> cave.Name="end")
