@@ -41,7 +41,6 @@ let main argv =
     let input = AOC.Util.InputHelper.GetInputLines<string>("https://adventofcode.com/2021/day/12/input", lineSeparatorRegex = "\n") 
                     |> Async.AwaitTask |> Async.RunSynchronously
                     |> List.ofSeq
-    //let input = ["start-A"; "start-b"; "A-c"; "A-b"; "b-d"; "A-end"; "b-end"]
     let connections = (input |> List.map (fun s -> s.Split('-') |> toTuple2))
                     |> List.append
                         (input |> List.map (fun s -> s.Split('-') |> Array.rev |> toTuple2))
