@@ -1,6 +1,5 @@
 ﻿open System
 open Microsoft.FSharp.Collections
-open FSharp.Collections.ParallelSeq
 
 type CountResults = (char * uint64) list
 type CacheEntry = { OuterChars: char list; InnerCounts: CountResults; Depth: int; }

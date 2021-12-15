@@ -8,14 +8,13 @@ using namespace std;
 
 void fold(vector<pair<int, int>>& const coords, int xLine, int yLine)
 {
-	for (int i = 0; i < coords.size(); ++i)
+	for (auto coord = coords.begin(); coord != coords.end(); ++coord)
 	{
-		auto& coord = coords[i];
-		int x = get<0>(coord), y = get<1>(coord);
+		int x = get<0>(*coord), y = get<1>(*coord);
 		if (xLine >= 0 && x > xLine)
-			coords[i] = pair<int, int>(xLine - (x - xLine), y);
+			*coord = pair<int, int>(xLine - (x - xLine), y);
 		else if (yLine >= 0 && y > yLine)
-			coords[i] = pair<int, int>(x, yLine - (y - yLine));
+			*coord = pair<int, int>(x, yLine - (y - yLine));
 	}
 }
 
