@@ -64,13 +64,28 @@ let rec magnitude sfn =
     |Complex(sfn1, sfn2, _) -> 3* magnitude sfn1 + 2* magnitude sfn2
     |Simple(x, d) -> x
 
+let largestMagnitudeAnyTwoNumbers sfn =
+    let allAdditions = sfn |> List.map (fun sfn1 -> sfn 
+                                                    |> List.filter (fun sfn2 -> sfn2 <> sfn1) 
+                                                    |> List.map (fun sfn2 -> (sfn1, sfn2))
+                                        ) 
+                            |> List.collect (fun t -> t)
+    let reducedAdditions = allAdditions |> List.map (fun (sfn1, sfn2) -> Complex(sfn1 |> withIncreasedDepth, sfn2 |> withIncreasedDepth, 0) |> reduceSnailFishNumber)
+    let magnitudes = reducedAdditions |> List.map (fun add -> magnitude add)
+    magnitudes |> List.max
+
 [<EntryPoint>]
 let main argv =
     let input = AOC.Util.InputHelper.GetInputLines<string>("https://adventofcode.com/2021/day/18/input", lineSeparatorRegex = "\n") 
                     |> Async.AwaitTask |> Async.RunSynchronously
                     |> List.ofSeq
     let numbers = snailfishNumbersFromInput input
+
+    //part 1
     let addedNumber = numbers.[1..] |> List.fold (fun sfn1 sfn2 -> Complex(sfn1 |> withIncreasedDepth, sfn2 |> withIncreasedDepth, 0) |> reduceSnailFishNumber) numbers.[0]
-    
     printfn "%i" (magnitude addedNumber)
+    
+    //part 2
+    printfn "%i" (largestMagnitudeAnyTwoNumbers numbers)
+    
     0
