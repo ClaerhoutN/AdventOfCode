@@ -2,8 +2,6 @@
 #include <fileUtilities.h>
 #include <iostream>
 #include <unordered_map>
-#include <tuple>
-
 using namespace std;
 /*p1Pos, p2Pos, p1Score, p2Score*/
 unordered_map<unsigned long long, std::pair<unsigned long long, unsigned long long>> cachedUniverses1;
@@ -46,7 +44,7 @@ std::pair<unsigned long long, unsigned long long> play(
 			else
 			{
 				auto key = getCacheKey(_p1Pos, _p2Pos, _p1Score, _p2Score);
-				auto& cache = playerNr == 0 ? cachedUniverses1 : cachedUniverses2;
+				auto& cache = playerNr ? cachedUniverses2 : cachedUniverses1;
 				auto cachedUniverseIt = cache.find(key);
 				std::pair<unsigned long long, unsigned long long> winResults;
 				if (cachedUniverseIt != cache.end())
