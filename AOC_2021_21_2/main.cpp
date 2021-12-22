@@ -42,8 +42,7 @@ std::pair<unsigned long long, unsigned long long> play(
 		{
 			pos = (pos + (rolled + prevRolls) - 1) % 10 + 1;
 			score += pos;			
-			if (score >= maxScore)
-				++wins;
+			if (score >= maxScore) ++wins;
 			else
 			{
 				auto key = getCacheKey(_p1Pos, _p2Pos, _p1Score, _p2Score);
