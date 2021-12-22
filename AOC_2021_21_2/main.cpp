@@ -57,15 +57,13 @@ std::pair<unsigned long long, unsigned long long> play(
 					winResults = play((playerNr + 1) % 2, _p1Pos, _p2Pos, 0, 0, _p1Score, _p2Score);
 					cache.emplace(key, winResults);
 				}
-				p1Wins += get<0>(winResults);
-				p2Wins += get<1>(winResults);
+				p1Wins += winResults.first; p2Wins += winResults.second;
 			}
 		}
 		else
 		{
 			auto played = play(playerNr, p1Pos, p2Pos, rollCount + 1, prevRolls + rolled, _p1Score, _p2Score);
-			p1Wins += get<0>(played);
-			p2Wins += get<1>(played);
+			p1Wins += played.first; p2Wins += played.second;
 		}
 	}
 	return pair<unsigned long long, unsigned long long>(p1Wins, p2Wins);
@@ -73,6 +71,6 @@ std::pair<unsigned long long, unsigned long long> play(
 
 int main() {
 	auto winningUniverses = play(0, 9, 10);
-	cout << max(get<0>(winningUniverses), get<1>(winningUniverses));
+	cout << max(winningUniverses.first, winningUniverses.second);
 	return 0;
 }
