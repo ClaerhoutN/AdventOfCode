@@ -87,7 +87,8 @@ namespace AOC.Util
                     || genericTypeDefinition == typeof(ValueTuple<,,,,>)
                     || genericTypeDefinition == typeof(ValueTuple<,,,,,>)
                     || genericTypeDefinition == typeof(ValueTuple<,,,,,,>)
-                    || genericTypeDefinition == typeof(ValueTuple<,,,,,,,>))
+                    || genericTypeDefinition == typeof(ValueTuple<,,,,,,,>)
+                    || genericTypeDefinition == typeof(Tuple<,>))
                 {
                     var parsingMethodsPerTypeArgument =
                         typeof(T).GenericTypeArguments
@@ -124,6 +125,8 @@ namespace AOC.Util
                     return (T)(object)int.Parse(s);
                 case TypeCode.String:
                     return (T)(object)s;
+                case TypeCode.Char:
+                    return (T)(object)s[0];
             }
             throw new NotImplementedException();
         }
