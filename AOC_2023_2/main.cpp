@@ -50,10 +50,10 @@ int main()
 	for (auto& line : lines)
 	{
 		sets.clear();
-		for (auto& strSet : split(line, ';', line.find(':') + 2))
+		for (const auto& strSet : split(line, ';', line.find(':') + 2))
 		{
 			Set set;
-			for (string& strColor : split(strSet, ','))
+			for (const string& strColor : split(strSet, ','))
 			{
 				auto t = split(ltrim_copy(strColor), ' ');
 				set.addCube(t[1], stoi(t[0]));
