@@ -1,5 +1,5 @@
-﻿$filePath = "C:\\Users\\nclaerhout\\OneDrive - Deloitte (O365D)\\Documents\\AOC\\2023_4\\input.txt";
-$connectionString = "Data Source=127.0.0.1;Initial Catalog=AOC_2023_4;User id=sa;Password=Google@123;";
+﻿$filePath = "<path to input file>";
+$connectionString = "<connection string>";
 
 $connection = new-object System.Data.SqlClient.SQLConnection($connectionString);
 

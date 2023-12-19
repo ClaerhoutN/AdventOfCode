@@ -168,10 +168,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AOC_2023_2", "AOC_2023_2\AO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AOC_2023_4", "AOC_2023_4", "{1D91DDC7-7C47-4398-B362-423446A12CA4}"
 	ProjectSection(SolutionItems) = preProject
-		2023_4\insert data.ps1 = 2023_4\insert data.ps1
-		2023_4\part 1.sql = 2023_4\part 1.sql
-		2023_4\part 2.sql = 2023_4\part 2.sql
-		2023_4\tableCreation.sql = 2023_4\tableCreation.sql
+		AOC_2023_4\insert data.ps1 = AOC_2023_4\insert data.ps1
+		AOC_2023_4\part 1.sql = AOC_2023_4\part 1.sql
+		AOC_2023_4\part 2.sql = AOC_2023_4\part 2.sql
+		AOC_2023_4\tableCreation.sql = AOC_2023_4\tableCreation.sql
 	EndProjectSection
 EndProject
 Global
