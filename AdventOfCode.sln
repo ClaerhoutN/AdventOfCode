@@ -166,6 +166,14 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "AOC_2023_1", "AOC_2023_1\AO
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AOC_2023_2", "AOC_2023_2\AOC_2023_2.vcxproj", "{77479F80-27E5-4EA4-A107-BC7AF3B4EBCE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AOC_2023_4", "AOC_2023_4", "{1D91DDC7-7C47-4398-B362-423446A12CA4}"
+	ProjectSection(SolutionItems) = preProject
+		2023_4\insert data.ps1 = 2023_4\insert data.ps1
+		2023_4\part 1.sql = 2023_4\part 1.sql
+		2023_4\part 2.sql = 2023_4\part 2.sql
+		2023_4\tableCreation.sql = 2023_4\tableCreation.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -949,6 +957,7 @@ Global
 		{70DDD3ED-B638-40BC-9DA6-99145204ADCC} = {CB8F14B2-51E9-47B4-B2C9-70BE384CFB69}
 		{627D0AFD-FDBF-4BA5-A833-C1AD2D98D9D8} = {CABE93E0-769D-4D65-955F-C1678BE7F3B8}
 		{77479F80-27E5-4EA4-A107-BC7AF3B4EBCE} = {CABE93E0-769D-4D65-955F-C1678BE7F3B8}
+		{1D91DDC7-7C47-4398-B362-423446A12CA4} = {CABE93E0-769D-4D65-955F-C1678BE7F3B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A52D590E-F681-46AE-8D79-11010CB74472}
