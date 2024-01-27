@@ -1,10 +1,4 @@
 ﻿using AOC.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static AOC_2023_5_CSharp.CategoryMap;
 
 namespace AOC_2023_5_CSharp
 {
